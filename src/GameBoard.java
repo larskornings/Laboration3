@@ -17,7 +17,7 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
     Text ta;
     Score _score;
     final int DELAY = 3;
-    final int brick3Rows = 0, brick2Rows = 1, brick1Rows = 0;
+    final int brick3Rows = 1, brick2Rows = 1, brick1Rows = 5;
     final int brickRows = brick1Rows + brick2Rows + brick3Rows;
     final int brickColumns = 12;
     final int brickStartX = 104, brickStartY = 80;
