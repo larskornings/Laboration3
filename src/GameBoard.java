@@ -17,7 +17,7 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
     Text ta;
     Score _score;
     final int DELAY = 3;
-    final int brick3Rows = 1, brick2Rows = 1, brick1Rows = 5;
+    final int brick3Rows = 0, brick2Rows = 1, brick1Rows = 0;
     final int brickRows = brick1Rows + brick2Rows + brick3Rows;
     final int brickColumns = 12;
     final int brickStartX = 104, brickStartY = 80;
@@ -31,13 +31,12 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
         if (startMove == true) {
             _ball.move();
             _score.updateScore();
+            if (noBricks()) {
+                gameWon();
+                t.stop();
+            }
             if (_ball.getY() > DISPLAY_HEIGHT / 2 && _ball.getY() < DISPLAY_HEIGHT) {
-                if (noBricks()) {
-                    gameWon();
-                    t.stop();
-                } else {
-                    _ball.collision(_bat);
-                }
+                _ball.collision(_bat);
             } else if (_ball.getY() >= DISPLAY_HEIGHT) {
                 gameOver();
                 t.stop();
@@ -45,10 +44,9 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
                 checkBrickCollision();
             }
         }
-
     }
 
-//Invoked when the mouse button has been clicked (pressed and released) on a component.
+    //Invoked when the mouse button has been clicked (pressed and released) on a component.
     @Override
     public void mouseClicked(MouseEvent e) {
 
@@ -179,7 +177,7 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
     }
 
     public void gameWon() {
-        ta = new Text("Victory");
+        ta = new Text("Game won");
         ta.setLocation((DISPLAY_WIDTH - ta.getWidth()) / 2, DISPLAY_HEIGHT / 2);
     }
 
@@ -187,5 +185,4 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
         ta = new Text("Game Over");
         ta.setLocation((DISPLAY_WIDTH - ta.getWidth()) / 2, DISPLAY_HEIGHT / 2);
     }
-
 }
