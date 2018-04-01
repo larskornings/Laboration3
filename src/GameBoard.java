@@ -16,6 +16,7 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
     Bat _bat;
     Text ta;
     Score _score;
+    
     final int DELAY = 3;
     final int brick3Rows = 1, brick2Rows = 1, brick1Rows = 5;
     final int brickRows = brick1Rows + brick2Rows + brick3Rows;
@@ -145,13 +146,13 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
             for (int j = 0; j < brickColumns; j++) {
                 // Gör bara en kollision
                 if (_ball.collision(_bricks[i][j])) {
-                    if (_bricks[i][j].getColor() == null) {
-                        if (_bricks[i][j] instanceof Brick3) {
-                            _score.add(5);
-                        } else if (_bricks[i][j] instanceof Brick2) {
-                            _score.add(2);
+                    if ( _bricks[i][j].getColor() == null) {
+                        if ( _bricks[i][j] instanceof Brick3) {
+                            _score.add( _bricks[i][j].getPoints());
+                        } else if ( _bricks[i][j] instanceof Brick2) {
+                            _score.add( _bricks[i][j].getPoints());
                         } else {
-                            _score.add(1);
+                            _score.add( _bricks[i][j].getPoints());
                         }
                     }
                     return;

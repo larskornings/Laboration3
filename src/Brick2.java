@@ -5,6 +5,7 @@ public class Brick2 extends Brick {
 
     public Brick2(int x, int y) {
         super(x, y, 1, Color.ORANGE);
+        points = 2;
     }
 
 }

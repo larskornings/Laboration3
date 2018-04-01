@@ -5,14 +5,11 @@ import wheels.users.RoundedRectangle;
 
 public abstract class Brick {
 
-    private final RoundedRectangle _brick;
+    protected final RoundedRectangle _brick;
     final static int WIDTH = 40;
     final static int HEIGHT = 20;
-    private int _hits;
-
-    public Brick(int x, int y, int hits) {
-        this(x, y, hits, Color.YELLOW);
-    }
+    protected int _hits;
+    protected int points;
 
     public Brick(int x, int y, int hits, Color color) {
         _brick = new RoundedRectangle();
@@ -21,6 +18,7 @@ public abstract class Brick {
         _brick.setLocation(x, y);
         _brick.setSize(WIDTH, HEIGHT);
         _hits = hits;
+        points = 0;
     }
 
     public void setLocation(int x, int y) {
@@ -43,16 +41,11 @@ public abstract class Brick {
         return _hits;
     }
 
+    public int getPoints() {
+        return points;
+    }
+    
     public void gotHit() {
         _hits--;
-        
-        if(_hits == 2) {
-            _brick.setFillColor(Color.GRAY);
-        }
-        if(_hits == 1) {
-            _brick.setFillColor(Color.LIGHT_GRAY);
-        }
-
-        
     }
 }
