@@ -29,9 +29,7 @@ public class Ball {
 
         if (by <= 0) {
             dy = SPEED;
-        } //else if (by >= GameBoard.DISPLAY_HEIGHT) {
-//            by = 0;
-//        }
+        }
 
         _ball.setLocation(bx + dx, by + dy);
     }
