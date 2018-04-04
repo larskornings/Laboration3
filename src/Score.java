@@ -3,9 +3,10 @@ import java.awt.Color;
 
 public class Score {
 
-    private int score = 0;
     private final Text _scoreText;
-
+    
+    private int score = 0;
+    
     public Score() {
         _scoreText = new Text("Score: " + score, 20, Color.BLACK);
     }
