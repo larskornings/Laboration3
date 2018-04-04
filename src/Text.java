@@ -5,12 +5,12 @@ import javax.swing.*;
 import wheels.users.RoundedRectangle;
 
 public class Text extends RoundedRectangle {
+    
+    public static final int DEFAULT_WIDTH = 200;
+    public static final int DEFAULT_BORDER_WIDTH = 30;
 
     private JTextArea _text;
     private int _borderWidth, _vGap;
-
-    public static final int DEFAULT_WIDTH = 200;
-    public static final int DEFAULT_BORDER_WIDTH = 30;
 
     public Text(String text) {
         this(text, wheels.users.Frame._dp, 40, Color.RED);
@@ -123,7 +123,6 @@ public class Text extends RoundedRectangle {
     }
 
     public void setBorderWidth(int width) {
-        //System.out.println("setBorderWidth " + width);
         if (width >= 0) {
             _borderWidth = width;
             setSize(getSize());
