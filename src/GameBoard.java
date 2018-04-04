@@ -16,7 +16,7 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
     Bat _bat;
     Text ta;
     Score _score;
-    
+
     final int DELAY = 3;
     final int brick3Rows = 1, brick2Rows = 1, brick1Rows = 5;
     final int brickRows = brick1Rows + brick2Rows + brick3Rows;
@@ -47,31 +47,26 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
         }
     }
 
-    //Invoked when the mouse button has been clicked (pressed and released) on a component.
     @Override
     public void mouseClicked(MouseEvent e) {
 
     }
 
-    //Invoked when a mouse button has been pressed on a component.
     @Override
     public void mousePressed(MouseEvent e) {
 
     }
 
-    //Invoked when a mouse button has been released on a component.
     @Override
     public void mouseReleased(MouseEvent e) {
         startMove = true;
     }
 
-    //Invoked when the mouse enters a component.
     @Override
     public void mouseEntered(MouseEvent e) {
 
     }
 
-    //Invoked when the mouse exits a component.
     @Override
     public void mouseExited(MouseEvent e) {
 
@@ -108,7 +103,6 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
         int batY = DISPLAY_HEIGHT * 7 / 8;
         _bat = new Bat(batX, batY);
 
-        // Start position Ball
         int ballX = _bat.getX() + Bat.WIDTH / 2 - Ball.DIAMETER / 2;
         int ballY = _bat.getY() - Ball.DIAMETER - 3;
         _ball = new Ball(ballX, ballY);
@@ -146,13 +140,13 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
             for (int j = 0; j < brickColumns; j++) {
                 // Gör bara en kollision
                 if (_ball.collision(_bricks[i][j])) {
-                    if ( _bricks[i][j].getColor() == null) {
-                        if ( _bricks[i][j] instanceof Brick3) {
-                            _score.add( _bricks[i][j].getPoints());
-                        } else if ( _bricks[i][j] instanceof Brick2) {
-                            _score.add( _bricks[i][j].getPoints());
+                    if (_bricks[i][j].getColor() == null) {
+                        if (_bricks[i][j] instanceof Brick3) {
+                            _score.add(_bricks[i][j].getPoints());
+                        } else if (_bricks[i][j] instanceof Brick2) {
+                            _score.add(_bricks[i][j].getPoints());
                         } else {
-                            _score.add( _bricks[i][j].getPoints());
+                            _score.add(_bricks[i][j].getPoints());
                         }
                     }
                     return;
