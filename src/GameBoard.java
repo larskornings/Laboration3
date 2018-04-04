@@ -11,17 +11,17 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
     final static int DISPLAY_WIDTH = 700;
     final static int DISPLAY_HEIGHT = 500;
 
-    Timer t;
-    Ball _ball;
-    Bat _bat;
-    Text ta;
-    Score _score;
-
     final int DELAY = 3;
     final int brick3Rows = 1, brick2Rows = 1, brick1Rows = 5;
     final int brickRows = brick1Rows + brick2Rows + brick3Rows;
     final int brickColumns = 12;
     final int brickStartX = 104, brickStartY = 80;
+    
+    Timer t;
+    Ball _ball;
+    Bat _bat;
+    Text ta;
+    Score _score;
 
     Brick[][] _bricks = new Brick[brickRows][brickColumns];
 
@@ -126,15 +126,6 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
         _score.setLocation(-20, DISPLAY_HEIGHT - 60);
     }
 
-    public void run() {
-        _dp.addMouseMotionListener(this);
-        _dp.addMouseListener(this);
-
-        initGame();
-        t = new Timer(DELAY, this);
-        t.start();
-    }
-
     public void checkBrickCollision() {
         for (int i = 0; i < (brickRows); i++) {
             for (int j = 0; j < brickColumns; j++) {
@@ -154,12 +145,7 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
             }
         }
     }
-
-    public static void main(String[] args) {
-        GameBoard g = new GameBoard();
-        g.run();
-    }
-
+    
     public boolean noBricks() {
         for (int i = 0; i < (brickRows); i++) {
             for (int j = 0; j < brickColumns; j++) {
@@ -179,5 +165,19 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
     public void gameOver() {
         ta = new Text("Game Over");
         ta.setLocation((DISPLAY_WIDTH - ta.getWidth()) / 2, DISPLAY_HEIGHT / 2);
+    }
+    
+    public void run() {
+        _dp.addMouseMotionListener(this);
+        _dp.addMouseListener(this);
+
+        initGame();
+        t = new Timer(DELAY, this);
+        t.start();
+    }
+
+    public static void main(String[] args) {
+        GameBoard g = new GameBoard();
+        g.run();
     }
 }
