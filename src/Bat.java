@@ -4,10 +4,11 @@ import wheels.users.Rectangle;
 
 public class Bat {
 
-    private final Rectangle _bat;
     final static int WIDTH = 80;
     final static int HEIGHT = 10;
-
+    
+    private final Rectangle _bat;
+    
     public Bat(int x, int y) {
         _bat = new Rectangle(Color.BLUE);
         _bat.setLocation(x - (WIDTH / 2), y);
