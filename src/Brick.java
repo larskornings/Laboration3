@@ -5,9 +5,11 @@ import wheels.users.RoundedRectangle;
 
 public abstract class Brick {
 
-    protected final RoundedRectangle _brick;
     final static int WIDTH = 40;
     final static int HEIGHT = 20;
+    
+    protected final RoundedRectangle _brick;
+    
     protected int _hits;
     protected int points;
 
