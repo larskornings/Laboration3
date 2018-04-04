@@ -5,11 +5,11 @@ import java.awt.Rectangle;
 
 public class Ball {
 
-    final static int DIAMETER = 15;
-    
+    public final static int DIAMETER = 15;
+
     private final int SPEED = 1;
     private final Ellipse _ball;
-    
+
     private int dx = SPEED, dy = -SPEED;
 
     public Ball(int x, int y) {

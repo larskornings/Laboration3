@@ -4,23 +4,23 @@ import java.awt.event.*;
 
 public class GameBoard extends wheels.users.Frame implements ActionListener, MouseMotionListener, MouseListener {
 
-    final static int DISPLAY_WIDTH = 700;
-    final static int DISPLAY_HEIGHT = 500;
+    public final static int DISPLAY_WIDTH = 700;
+    public final static int DISPLAY_HEIGHT = 500;
 
-    final int DELAY = 3;
-    final int brick3Rows = 1, brick2Rows = 1, brick1Rows = 5;
-    final int brickRows = brick1Rows + brick2Rows + brick3Rows;
-    final int brickColumns = 12;
-    final int brickStartX = 104, brickStartY = 80;
-    
-    Brick[][] _bricks = new Brick[brickRows][brickColumns];
-    
-    Timer t;
-    Ball _ball;
-    Bat _bat;
-    Score _score;
+    private final int DELAY = 3;
+    private final int brick3Rows = 1, brick2Rows = 1, brick1Rows = 5;
+    private final int brickRows = brick1Rows + brick2Rows + brick3Rows;
+    private final int brickColumns = 12;
+    private final int brickStartX = 104, brickStartY = 80;
 
-    boolean startMove = false;
+    private final Brick[][] _bricks = new Brick[brickRows][brickColumns];
+
+    private final Timer t;
+    private final Ball _ball;
+    private final Bat _bat;
+    private final Score _score;
+
+    private boolean startMove = false;
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -86,9 +86,8 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
 
     public GameBoard() {
         super();
-    }
+        t = new Timer(DELAY, this);
 
-    public void initGame() {
         int batX = DISPLAY_WIDTH / 2;
         int batY = DISPLAY_HEIGHT * 7 / 8;
         _bat = new Bat(batX, batY);
@@ -97,8 +96,13 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
         int ballY = _bat.getY() - Ball.DIAMETER - 3;
         _ball = new Ball(ballX, ballY);
 
+        _score = new Score();
+        _score.setLocation(10, DISPLAY_HEIGHT - 30);
+    }
+
+    public void initGame() {
         int cBrickY = brickStartY;
-        
+
         for (int i = 0; i < brickRows; i++) {
             for (int j = 0; j < brickColumns; j++) {
                 int cBrickX = brickStartX + j * (Brick.WIDTH);
@@ -110,12 +114,10 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
                     _bricks[i][j] = new Brick1(cBrickX, cBrickY);
                 }
             }
-            
+
             cBrickY += Brick.HEIGHT;
         }
 
-        _score = new Score();
-        _score.setLocation(-20, DISPLAY_HEIGHT - 60);
     }
 
     public void checkBrickCollision() {
@@ -137,7 +139,7 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
             }
         }
     }
-    
+
     public boolean noBricks() {
         for (int i = 0; i < (brickRows); i++) {
             for (int j = 0; j < brickColumns; j++) {
@@ -148,14 +150,13 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
         }
         return true;
     }
-    
+
     public void run() {
         _dp.addMouseMotionListener(this);
         _dp.addMouseListener(this);
 
         initGame();
-        
-        t = new Timer(DELAY, this);
+
         t.start();
     }
 

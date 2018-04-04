@@ -5,7 +5,7 @@ public class Brick3 extends Brick {
 
     public Brick3(int x, int y) {
         super(x, y, 3, Color.DARK_GRAY);
-        points = 3;
+        _points = 3;
     }
 
     @Override
