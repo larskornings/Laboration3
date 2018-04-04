@@ -28,9 +28,9 @@ public class Text extends RoundedRectangle {
 
         _text = new JTextArea(text);
         _text.setEditable(false);
-        
+
         _text.setBackground(_dp.getBackground());
-        
+
         Font font = new Font("Helvetica", Font.BOLD, size);
         _text.setFont(font);
         _text.setForeground(color);
