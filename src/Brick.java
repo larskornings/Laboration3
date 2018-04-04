@@ -44,7 +44,7 @@ public abstract class Brick {
     public int getPoints() {
         return points;
     }
-    
+
     public void gotHit() {
         _hits--;
     }

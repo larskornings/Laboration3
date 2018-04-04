@@ -7,5 +7,4 @@ public class Brick2 extends Brick {
         super(x, y, 1, Color.ORANGE);
         points = 2;
     }
-
 }
