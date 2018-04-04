@@ -1,10 +1,6 @@
 
 import javax.swing.Timer;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
 
 public class GameBoard extends wheels.users.Frame implements ActionListener, MouseMotionListener, MouseListener {
 
@@ -17,13 +13,12 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
     final int brickColumns = 12;
     final int brickStartX = 104, brickStartY = 80;
     
+    Brick[][] _bricks = new Brick[brickRows][brickColumns];
+    
     Timer t;
     Ball _ball;
     Bat _bat;
-    Text ta;
     Score _score;
-
-    Brick[][] _bricks = new Brick[brickRows][brickColumns];
 
     boolean startMove = false;
 
@@ -33,13 +28,13 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
             _ball.move();
             _score.updateScore();
             if (noBricks()) {
-                gameWon();
+                _score.gameWon();
                 t.stop();
             }
             if (_ball.getY() > DISPLAY_HEIGHT / 2 && _ball.getY() < DISPLAY_HEIGHT) {
                 _ball.collision(_bat);
             } else if (_ball.getY() >= DISPLAY_HEIGHT) {
-                gameOver();
+                _score.gameOver();
                 t.stop();
             } else {
                 checkBrickCollision();
@@ -49,12 +44,10 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-
     }
 
     @Override
@@ -64,12 +57,10 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-
     }
 
     @Override
@@ -98,7 +89,6 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
     }
 
     public void initGame() {
-        // Start position Bat
         int batX = DISPLAY_WIDTH / 2;
         int batY = DISPLAY_HEIGHT * 7 / 8;
         _bat = new Bat(batX, batY);
@@ -108,6 +98,7 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
         _ball = new Ball(ballX, ballY);
 
         int cBrickY = brickStartY;
+        
         for (int i = 0; i < brickRows; i++) {
             for (int j = 0; j < brickColumns; j++) {
                 int cBrickX = brickStartX + j * (Brick.WIDTH);
@@ -119,6 +110,7 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
                     _bricks[i][j] = new Brick1(cBrickX, cBrickY);
                 }
             }
+            
             cBrickY += Brick.HEIGHT;
         }
 
@@ -129,7 +121,6 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
     public void checkBrickCollision() {
         for (int i = 0; i < (brickRows); i++) {
             for (int j = 0; j < brickColumns; j++) {
-                // Gör bara en kollision
                 if (_ball.collision(_bricks[i][j])) {
                     if (_bricks[i][j].getColor() == null) {
                         if (_bricks[i][j] instanceof Brick3) {
@@ -140,6 +131,7 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
                             _score.add(_bricks[i][j].getPoints());
                         }
                     }
+                    // Gör bara en kollision
                     return;
                 }
             }
@@ -156,22 +148,13 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
         }
         return true;
     }
-
-    public void gameWon() {
-        ta = new Text("Game won");
-        ta.setLocation((DISPLAY_WIDTH - ta.getWidth()) / 2, DISPLAY_HEIGHT / 2);
-    }
-
-    public void gameOver() {
-        ta = new Text("Game Over");
-        ta.setLocation((DISPLAY_WIDTH - ta.getWidth()) / 2, DISPLAY_HEIGHT / 2);
-    }
     
     public void run() {
         _dp.addMouseMotionListener(this);
         _dp.addMouseListener(this);
 
         initGame();
+        
         t = new Timer(DELAY, this);
         t.start();
     }
