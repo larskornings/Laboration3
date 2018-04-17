@@ -1,16 +1,17 @@
 
 import java.awt.Color;
-import wheels.users.Rectangle;
+import java.awt.Rectangle;
+
 
 public class Bat {
 
     public final static int WIDTH = 80;
     public final static int HEIGHT = 10;
 
-    private final Rectangle _bat;
+    private final wheels.users.Rectangle _bat;
 
     public Bat(int x, int y) {
-        _bat = new Rectangle(Color.BLUE);
+        _bat = new wheels.users.Rectangle(Color.BLUE);
         _bat.setLocation(x - (WIDTH / 2), y);
         _bat.setSize(WIDTH, HEIGHT);
     }
@@ -30,8 +31,7 @@ public class Bat {
         return _bat.getYLocation();
     }
 
-    public java.awt.Rectangle getBounds() {
+    public Rectangle getBounds() {
         return _bat.getBounds();
     }
-
 }

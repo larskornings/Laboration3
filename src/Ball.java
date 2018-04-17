@@ -8,9 +8,9 @@ public class Ball {
     public final static int DIAMETER = 15;
 
     private final int SPEED = 1;
-    private final Ellipse _ball;
-
     private int dx = SPEED, dy = -SPEED;
+
+    private final Ellipse _ball;
 
     public Ball(int x, int y) {
         _ball = new Ellipse();
@@ -35,7 +35,7 @@ public class Ball {
         _ball.setLocation(bx + dx, by + dy);
     }
 
-    public void collision(Bat b) {
+    public void collisionWithBat(Bat b) {
         Rectangle ballBounds = _ball.getBounds();
         Rectangle batBounds = b.getBounds();
 
@@ -43,32 +43,32 @@ public class Ball {
             Rectangle intRect = ballBounds.intersection(batBounds);
             if (intRect.getWidth() >= intRect.getHeight() && intRect.getMinY() == batBounds.getMinY()) { // Boll träffar översidan
                 dy = -SPEED;
-            } else if (intRect.getWidth() < intRect.getHeight()) { // Boll träffar höger eller vänster sida
-                if (intRect.getMaxX() == batBounds.getMaxX()) {
+            } else { // Boll träffar höger eller vänster sida
+                if (intRect.getMaxX() == batBounds.getMaxX()) { //Bollen träffar höger sida
                     dx = SPEED;
-                } else {//if (intRect.getMinX() == batBounds.getMinX()) {
+                } else { //Bollen träffar vänster sida      
                     dx = -SPEED;
                 }
             }
         }
     }
 
-    public boolean collision(Brick b) {
+    public boolean collisionWithBrick(Brick b) {
         Rectangle ballBounds = _ball.getBounds();
         Rectangle brickBounds = b.getBounds();
 
-        if (ballBounds.intersects(brickBounds) && b.getColor() != null) {
-            checkSideHit(ballBounds, brickBounds);
-            b.gotHit();
-            if (b.getHits() < 1) {
-                b.setColor(null);
+        if (ballBounds.intersects(brickBounds) && b.isNotRemoved()) {
+            checkHit(ballBounds, brickBounds);
+            if (b.gotHit()) {
+                b.remove();
             }
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
-    private void checkSideHit(Rectangle b1, Rectangle b2) {
+    private void checkHit(Rectangle b1, Rectangle b2) {
         Rectangle intRect = b1.intersection(b2);
 
         if (intRect.getWidth() >= intRect.getHeight()) { // Boll träffar under eller över sida
@@ -78,20 +78,18 @@ public class Ball {
         }
     }
 
-    public void setLocation(int x, int y) {
+    public void followBat(Bat bat) {
+        int ballOffsetX = (Bat.WIDTH / 2) - Ball.DIAMETER / 2;
+        int ballOffsetY = Ball.DIAMETER + 3; // To not be on the bat
+
+        int x = bat.getX() + ballOffsetX;
+        int y = bat.getY() - ballOffsetY;
+
         _ball.setLocation(x, y);
     }
 
-    public Color getColor() {
-        return _ball.getColor();
-    }
-
-    public void setColor(Color color) {
-        _ball.setColor(color);
-    }
-
-    public int getX() {
-        return _ball.getXLocation();
+    public void removeBall() {
+        _ball.setColor(null);
     }
 
     public int getY() {

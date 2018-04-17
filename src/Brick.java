@@ -23,31 +23,28 @@ public abstract class Brick {
         _points = 0;
     }
 
-    public void setLocation(int x, int y) {
-        _brick.setLocation(x, y);
-    }
-
     public Rectangle getBounds() {
         return _brick.getBounds();
     }
 
-    public Color getColor() {
-        return _brick.getColor();
+    public boolean isNotRemoved() {
+        return _brick.getColor() != null;
     }
 
-    public void setColor(Color color) {
-        _brick.setColor(color);
+    public boolean isRemoved() {
+        return _brick.getColor() == null;
     }
 
-    public int getHits() {
-        return _hits;
+    public void remove() {
+        _brick.setColor(null);
     }
 
     public int getPoints() {
         return _points;
     }
 
-    public void gotHit() {
+    public boolean gotHit() {
         _hits--;
+        return _hits < 1;
     }
 }

@@ -9,7 +9,7 @@ public class Brick3 extends Brick {
     }
 
     @Override
-    public void gotHit() {
+    public boolean gotHit() {
         _hits--;
 
         if (_hits == 2) {
@@ -18,5 +18,7 @@ public class Brick3 extends Brick {
         if (_hits == 1) {
             _brick.setFillColor(Color.LIGHT_GRAY);
         }
+
+        return _hits < 1;
     }
 }

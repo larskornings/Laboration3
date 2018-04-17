@@ -1,14 +1,15 @@
 
 import javax.swing.Timer;
 import java.awt.event.*;
+import wheels.users.Frame;
 
-public class GameBoard extends wheels.users.Frame implements ActionListener, MouseMotionListener, MouseListener {
+public class GameBoard extends Frame implements ActionListener, MouseMotionListener, MouseListener {
 
     public final static int DISPLAY_WIDTH = 700;
     public final static int DISPLAY_HEIGHT = 500;
 
-    private final int DELAY = 3;
-    private final int brick3Rows = 1, brick2Rows = 1, brick1Rows = 5;
+    private final int DELAY = 2;
+    private final int brick3Rows = 1, brick2Rows = 2, brick1Rows = 4;
     private final int brickRows = brick1Rows + brick2Rows + brick3Rows;
     private final int brickColumns = 12;
     private final int brickStartX = 104, brickStartY = 80;
@@ -20,23 +21,25 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
     private final Bat _bat;
     private final Score _score;
 
-    private boolean startMove = false;
+    private boolean gameStarted = false;
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (startMove == true) {
+        if (gameStarted == true) {
             _ball.move();
             _score.updateScore();
             if (noBricks()) {
-                _score.gameWon();
+                _score.youWin();
+                _ball.removeBall();
                 t.stop();
-            }
-            if (_ball.getY() > DISPLAY_HEIGHT / 2 && _ball.getY() < DISPLAY_HEIGHT) {
-                _ball.collision(_bat);
+            } else if (_ball.getY() > DISPLAY_HEIGHT / 2 && _ball.getY() < DISPLAY_HEIGHT) {
+                _ball.collisionWithBat(_bat);
             } else if (_ball.getY() >= DISPLAY_HEIGHT) {
                 _score.gameOver();
+                _ball.removeBall();
                 t.stop();
-            } else {
+            } 
+            else {
                 checkBrickCollision();
             }
         }
@@ -52,7 +55,7 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        startMove = true;
+        gameStarted = true;
     }
 
     @Override
@@ -73,14 +76,11 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
         mouseDraggedOrMoved(e);
     }
 
-    public void mouseDraggedOrMoved(MouseEvent e) {
+    private void mouseDraggedOrMoved(MouseEvent e) {
         _bat.setLocation(e.getX(), _bat.getY());
 
-        int ballOffsetX = (Bat.WIDTH / 2) - Ball.DIAMETER / 2;
-        int ballOffsetY = Ball.DIAMETER + 3; // To not be on the bat
-
-        if (startMove == false) {
-            _ball.setLocation(_bat.getX() + ballOffsetX, _bat.getY() - ballOffsetY);
+        if (gameStarted == false) {
+            _ball.followBat(_bat);
         }
     }
 
@@ -96,11 +96,14 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
         int ballY = _bat.getY() - Ball.DIAMETER - 3;
         _ball = new Ball(ballX, ballY);
 
+        initBricks();
+
         _score = new Score();
         _score.setLocation(10, DISPLAY_HEIGHT - 30);
+
     }
 
-    public void initGame() {
+    private void initBricks() {
         int cBrickY = brickStartY;
 
         for (int i = 0; i < brickRows; i++) {
@@ -120,18 +123,12 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
 
     }
 
-    public void checkBrickCollision() {
+    private void checkBrickCollision() {
         for (int i = 0; i < (brickRows); i++) {
             for (int j = 0; j < brickColumns; j++) {
-                if (_ball.collision(_bricks[i][j])) {
-                    if (_bricks[i][j].getColor() == null) {
-                        if (_bricks[i][j] instanceof Brick3) {
-                            _score.add(_bricks[i][j].getPoints());
-                        } else if (_bricks[i][j] instanceof Brick2) {
-                            _score.add(_bricks[i][j].getPoints());
-                        } else {
-                            _score.add(_bricks[i][j].getPoints());
-                        }
+                if (_ball.collisionWithBrick(_bricks[i][j])) {
+                    if (_bricks[i][j].isRemoved()) {
+                        _score.add(_bricks[i][j].getPoints());
                     }
                     // Gör bara en kollision
                     return;
@@ -140,10 +137,10 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
         }
     }
 
-    public boolean noBricks() {
+    private boolean noBricks() {
         for (int i = 0; i < (brickRows); i++) {
             for (int j = 0; j < brickColumns; j++) {
-                if (_bricks[i][j].getColor() != null) {
+                if (_bricks[i][j].isNotRemoved()) {
                     return false;
                 }
             }
@@ -151,11 +148,9 @@ public class GameBoard extends wheels.users.Frame implements ActionListener, Mou
         return true;
     }
 
-    public void run() {
+    private void run() {
         _dp.addMouseMotionListener(this);
         _dp.addMouseListener(this);
-
-        initGame();
 
         t.start();
     }

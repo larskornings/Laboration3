@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>10</x>
+      <y>10</y>
+      <w>370</w>
+      <h>490</h>
+    </coordinates>
+    <panel_attributes>::GameBoard
+--
++DISPLAY_WIDTH = 700: int
++DISPLAY_HEIGHT = 500: int
+-DELAY = 3: int
+-brick3Rows = 1, brick2Rows = 2, brick1Rows = 4: int
+-brickRows = brick1Rows + brick2Rows + brick3Rows: int
+-brickColumns = 12: int
+-brickStartX = 104, brickStartY = 80: int
+-_bricks = new Brick[brickRows][brickColumns]: Brick[][]
+-t: Timer
+-_ball: Ball
+-_bat: Bat
+-_score: Score
+-startMove = false: boolean
+--
++GameBoard(): ctor
++actionPerformed(ActionEvent e): void
++mouseClicked(MouseEvent e): void
++mousePressed(MouseEvent e): void
++mouseReleased(MouseEvent e): void
++mouseEntered(MouseEvent e): void
++mouseExited(MouseEvent e): void
++mouseDragged(MouseEvent e): void
++mouseMoved(MouseEvent e): void
+-mouseDraggedOrMoved(MouseEvent e): void
+-initGame(): void
+-checkBrickCollision(): void
+-noBricks(): boolean
+-run(): void
++main(String[] args): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>390</x>
+      <y>10</y>
+      <w>320</w>
+      <h>270</h>
+    </coordinates>
+    <panel_attributes>::Ball
+--
++DIAMETER = 15: int
+-SPEED = 1: int
+-_ball: Ellipse
+-dx = SPEED, dy = -SPEED: int
+--
++Ball(int x, int y): ctor
++move(): void
++collisionWithBat(Bat b): void
++collisionWithBrick(Brick b): boolean
+-checkSideHit(Rectangle b1, Rectangle b2): void
++setLocation(int x, int y): void
++getColor(): Color
++setColor(Color color): void
++getX(): int
++getY(): int
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>440</x>
+      <y>440</y>
+      <w>280</w>
+      <h>270</h>
+    </coordinates>
+    <panel_attributes>/::Brick/
+--
++WIDTH = 40: int
++HEIGHT = 20: int
+#_brick: RoundedRectangle
+#_hits: int
+#_points: int
+--
++Brick(int x, int y, int hits, Color color): ctor
++setLocation(int x, int y): void
++getBounds(): Rectangle
++getColor(): Color
++setColor(Color color): void
++getHits(): int
++getPoints(): int
++gotHit(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>230</x>
+      <y>510</y>
+      <w>200</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>::Score
+--
+-_scoreText: Text
+-_ta: Text
+-score = 0: int
+--
++Score(): ctor
++setLocation(int x, int y): void
++updateScore(): void
++gameWon(): void
++gameOver(): void
++add(int i): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>10</x>
+      <y>510</y>
+      <w>210</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>::Bat
+--
++WIDTH = 80: int
++HEIGHT = 10: int
+-_bat: wheels.users.Rectangle
+--
++Bat(int x, int y): ctor
++setLocation(int x, int y): void
++getX(): int
++getY(): int
++getBounds(): Rectangle
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>390</x>
+      <y>290</y>
+      <w>360</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>::Text
+--
+-_text: JTextArea
+-_width, _height: int
+--
++Text(int fontSize, int width, int height, Color color): ctor
++setLocation(int x, int y): void
++setText(String text): void
++getWidth(): int
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>640</x>
+      <y>720</y>
+      <w>160</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>::Brick3
+--
+--
++Brick3(int x, int y): ctor
++gotHit(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>300</x>
+      <y>720</y>
+      <w>160</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>::Brick1
+--
+--
++Brick1(int x, int y): ctor
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>470</x>
+      <y>720</y>
+      <w>160</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>::Brick2
+--
+--
++Brick2(int x, int y): ctor
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
